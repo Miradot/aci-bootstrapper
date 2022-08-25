@@ -1,0 +1,19 @@
+---
+user_fabric_policies: # this dict must always be present
+  policies:
+    pod:
+      date_and_time:
+        servers:
+          - 1.1.1.1
+          - 1.1.1.2
+  global:
+    dns_profiles:
+      domains:
+        - example.se
+      dns_providers:
+        - 1.1.1.1
+user_system_settings: # this dict must always be present
+ endpoint_controls:
+   ip_aging:
+     state: "disabled" # not recommended, only for example
+...

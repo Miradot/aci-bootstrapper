@@ -1,0 +1,59 @@
+---
+- name: Set Fabric > Fabric Policies > Policies > Pod > Date and Time > Administrative State
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/time-default.json"
+    method: post
+    content:
+      {
+        "datetimePol": {
+          "attributes": {
+            "dn": "uni/fabric/time-default",
+            "adminSt": "{{ fabric_combined.policies.pod.date_and_time.state }}"
+          }
+        }
+      }
+
+- name: Set Fabric > Fabric Policies > Policies > Pod > Date and Time > NTP Servers
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/time-default/ntpprov-{{ item }}.json"
+    method: post
+    content:
+      {
+        "datetimeNtpProv": {
+          "attributes": {
+            "dn": "uni/fabric/time-default/ntpprov-{{ item }}",
+            "name": "{{ item }}",
+            "rn": "ntpprov-{{ item }}",
+            "status": "created,modified"
+          }
+        }
+      }
+  loop: "{{ fabric_combined.policies.pod.date_and_time.servers }}"
+
+- name: Bind Management EPG to NTP Server @ Fabric > Fabric Policies > Policies > Pod > Date and Time
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/time-default/ntpprov-{{ item }}/rsNtpProvToEpg.json"
+    method: post
+    content:
+      {
+        "datetimeRsNtpProvToEpg": {
+          "attributes": {
+            "tDn": "{{ fabric_combined.policies.pod.date_and_time.mgmt_epg }}",
+            "status": "created,modified"
+          }
+        }
+      }
+  loop: "{{ fabric_combined.policies.pod.date_and_time.servers }}"
+...

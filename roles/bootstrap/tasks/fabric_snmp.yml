@@ -1,0 +1,42 @@
+---
+- name: Set Fabric > Fabric Policies > Policies > Pod > SNMP > Settings
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/snmppol-default.json"
+    method: post
+    content:
+      {
+        "snmpPol": {
+          "attributes": {
+            "dn": "uni/fabric/snmppol-default",
+            "adminSt": "{{ fabric_policies.policies.pod.snmp.state }}",
+            "contact": "{{ fabric_policies.policies.pod.snmp.contact }}",
+            "loc": "{{ fabric_policies.policies.pod.snmp.location }}"
+          }
+        }
+      }
+
+- name: Set Fabric > Fabric Policies > Policies > Pod > SNMP > SNMP Community Policies
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/snmppol-default/community-{{ item }}.json"
+    method: post
+    content:
+      {
+        "snmpCommunityP": {
+          "attributes": {
+            "dn": "ni/fabric/snmppol-default/community-{{ item }}",
+            "name": "{{ item }}",
+            "rn": "community-{{ item }}",
+            "status": "created,modified"
+          }
+        }
+      }
+  loop: "{{ fabric_policies.policies.pod.snmp.community }}"
+...

@@ -1,0 +1,63 @@
+---
+#
+# https://www.cisco.com/c/dam/en/us/solutions/collateral/data-center-virtualization/application-centric-infrastructure/aci-guide-best-practice-configurations.pdf
+# https://www.ciscolive.com/c/dam/r/ciscolive/us/docs/2016/pdf/BRKACI-2303.pdf
+#
+validate_certs: False
+system_settings:
+  fabric_wide:
+    disable_remote_ep_learning: "true"     # true / false
+    enforce_subnet_check: "true"           # true / false
+    enforce_epg_vlan_validation: "false"   # true / false
+    enforce_domain_validation: "false"     # true / false
+    opflex_client_auth: "false"            # true / false
+    reallocate_gipo: "false"               # true / false
+    restrict_infra_vlan_traffic: "false"   # true / false
+  port_tracking:
+    state: "on"                            # on / off
+    delay_restore_time: "120"
+    min_link_trigger: "0"
+    include_apic_ports_in_trigger: "false" # true / false
+  date_and_time:
+    format: "local"                        # local / utc
+    time_zone: "p120_Europe-Stockholm"     # check aci api inspector to find correct name
+    offset: "enabled"                      # enabled / disabled
+  coop_group:
+    type: "strict"                         # strict / compatible
+  endpoint_controls:
+    ep_loop_protection:
+      state: "enabled"                     # enabled / disabled
+      interval: "60"
+      factor: "4"
+      action: ""                           # bd-learn-disable,port-disable / ""
+    rouge_ep_control:
+      state: "enabled"                     # enabled / disabled
+      interval: "30"
+      factor: "6"
+      hold_interval: "1800"
+    ip_aging:
+      state: "enabled"                     # enabled / disabled
+fabric_policies:
+  policies:
+    pod:
+      date_and_time:
+        state: "enabled"                   # enabled / disabled
+        mgmt_epg: "uni/tn-mgmt/mgmtp-default/oob-default"
+        servers: []
+      snmp:
+        state: "enabled"                   # enabled / disabled
+        contact: ""
+        location: ""
+        community: []
+      management_access:
+        http: "disable"                    # enabled / disabled
+        telnet: "disable"                  # enabled / disabled
+    interface:
+      l3_interface:
+        state: "enabled"                   # enabled / disabled
+    global:
+      dns_profiles:
+        domains: []
+        providers: []
+        mgmt_epg: "uni/tn-mgmt/mgmtp-default/oob-default"
+...

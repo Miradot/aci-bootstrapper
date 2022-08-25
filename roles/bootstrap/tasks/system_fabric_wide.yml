@@ -1,0 +1,25 @@
+---
+- name: Set System > System Settings Fabric Wide
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/infra/settings.json"
+    method: post
+    content:
+      {
+        "infraSetPol": {
+          "attributes": {
+            "dn": "uni/infra/settings",
+            "enforceSubnetCheck": "{{ system_combined.fabric_wide.enforce_subnet_check }}",
+            "unicastXrEpLearnDisable": "{{ system_combined.fabric_wide.disable_remote_ep_learning }}",
+            "validateOverlappingVlans": "{{ system_combined.fabric_wide.enforce_epg_vlan_validation }}",
+            "domainValidation": "{{ system_combined.fabric_wide.enforce_domain_validation }}",
+            "opflexpAuthenticateClients": "{{ system_combined.fabric_wide.opflex_client_auth }}",
+            "reallocateGipo": "{{ system_combined.fabric_wide.reallocate_gipo }}",
+            "restrictInfraVLANTraffic": "{{ system_combined.fabric_wide.restrict_infra_vlan_traffic }}"
+          }
+        }
+      }
+...

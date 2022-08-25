@@ -1,0 +1,19 @@
+---
+- name: Set Fabric > Fabric Policies > Policies >Interface > L3 Interface > BFD State
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/l3IfP-default.json"
+    method: post
+    content:
+      {
+        "l3IfPol": {
+          "attributes": {
+            "dn": "uni/fabric/l3IfP-default",
+            "bfdIsis": "{{ fabric_policies.policies.interface.l3_interface.state }}"
+          }
+        }
+      }
+...

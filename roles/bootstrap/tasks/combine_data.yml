@@ -1,0 +1,9 @@
+---
+- name: combine user settings with defaults
+  ansible.builtin.set_fact:
+    fabric_combined: "{{ fabric_policies | combine(user_fabric_policies, recursive=True) }}"
+
+- name: combine user settings with defaults
+  ansible.builtin.set_fact:
+    system_combined: "{{ system_settings | combine(user_system_settings, recursive=True) }}"
+...

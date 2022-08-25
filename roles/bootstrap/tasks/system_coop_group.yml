@@ -1,0 +1,19 @@
+---
+- name: Set System > System Settings > COOP Group > Type
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/pol-default.json"
+    method: post
+    content:
+      {
+        "coopPol": {
+          "attributes": {
+            "dn": "uni/fabric/pol-default",
+            "type": "{{ system_combined.coop_group.type }}"
+          }
+        }
+      }
+...

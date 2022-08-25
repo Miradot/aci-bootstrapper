@@ -1,0 +1,21 @@
+---
+- name: Set System > System Settings > Date and Time
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/format-default.json"
+    method: post
+    content:
+      {
+        "datetimeFormat": {
+          "attributes": {
+            "dn": "uni/fabric/format-default",
+            "showOffset": "{{ system_combined.date_and_time.offset }}",
+            "displayFormat": "{{ system_combined.date_and_time.format }}",
+            "tz": "{{ system_combined.date_and_time.time_zone }}",
+          }
+        }
+      }
+...

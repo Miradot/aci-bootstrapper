@@ -1,0 +1,61 @@
+---
+- name: Set System > System Settings > Endpoint Controls (EP Loop Protection)
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/infra/epLoopProtectP-default.json"
+    method: post
+    content:
+      {
+        "epLoopProtectP": {
+          "attributes": {
+            "dn": "uni/infra/epLoopProtectP-default",
+            "adminSt": "{{ system_combined.endpoint_controls.ep_loop_protection.state }}",
+            "action": "{{ system_combined.endpoint_controls.ep_loop_protection.action }}",
+            "loopDetectIntvl": "{{ system_combined.endpoint_controls.ep_loop_protection.interval }}",
+            "loopDetectMult": "{{ system_combined.endpoint_controls.ep_loop_protection.factor }}"
+          }
+        }
+      }
+
+- name: Set > System > System Settings Endpoint Controls (Rouge EP Control)
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/infra/epCtrlP-default.json"
+    method: post
+    content:
+      {
+        "epControlP": {
+          "attributes": {
+            "dn": "uni/infra/epCtrlP-default",
+            "adminSt": "{{ system_combined.endpoint_controls.rouge_ep_control.state }}",
+            "holdIntvl": "{{ system_combined.endpoint_controls.rouge_ep_control.hold_interval }}",
+            "rogueEpDetectIntvl": "{{ system_combined.endpoint_controls.rouge_ep_control.interval }}",
+            "rogueEpDetectMult": "{{ system_combined.endpoint_controls.rouge_ep_control.factor }}"
+          }
+        }
+      }
+
+- name: Set System > System Settings Endpoint Controls (IP Aging)
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/infra/ipAgingP-default.json"
+    method: post
+    content:
+      {
+        "epIpAgingP": {
+          "attributes": {
+            "dn": "uni/infra/ipAgingP-default",
+            "adminSt": "{{ system_combined.endpoint_controls.ip_aging.state }}"
+          }
+        }
+      }
+...

@@ -1,0 +1,12 @@
+---
+- name: Bootstrap ACI
+  gather_facts: no
+  hosts: aci
+  connection: local
+  vars_files:
+    - ./vars_files/main.yml
+
+  tasks:
+    - ansible.builtin.include_role:
+        name: bootstrap
+...

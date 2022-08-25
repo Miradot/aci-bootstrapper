@@ -1,0 +1,63 @@
+---
+- name: Set Fabric > Fabric Policies > Policies > Global > DNS Profiles > Management EPG
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/dnsp-default/rsProfileToEpg.json"
+    method: post
+    content:
+      {
+        "dnsRsProfileToEpg": {
+          "attributes": {
+            "tDn": "{{ fabric_combined.policies.global.dns_profiles.mgmt_epg }}",
+            "status": "created,modified"
+          }
+        }
+      }
+
+- name: Set Fabric > Fabric Policies > Policies > Global > DNS Profiles > DNS Providers
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/dnsp-default/prov-[{{ item.split(':')[0] }}].json"
+    method: post
+    content:
+      {
+        "dnsProv": {
+          "attributes": {
+            "dn": "uni/fabric/dnsp-default/prov-[{{ item.split(':')[0] }}]",
+            "addr": "{{ item.split(':')[0] }}",
+            "rn": "prov-[{{ item.split(':')[0] }}]",
+            "preferred": "{{ item.split(':')[1] }}",
+            "status": "created,modified"
+          }
+        }
+      }
+  loop: "{{ fabric_combined.policies.global.dns_profiles.providers }}"
+
+- name: Set Fabric > Fabric Policies > Policies > Global > DNS Profiles > DNS Domains
+  cisco.aci.aci_rest:
+    validate_certs: "{{ validate_certs }}"
+    hostname: "{{ inventory_hostname }}"
+    username: "{{ user }}"
+    password: "{{ pass }}"
+    path: "/api/node/mo/uni/fabric/dnsp-default/dom-{{ item.split(':')[0] }}.json"
+    method: post
+    content:
+      {
+        "dnsDomain": {
+          "attributes": {
+            "dn": "uni/fabric/dnsp-default/dom-{{ item.split(':')[0] }}",
+            "name": "{{ item.split(':')[0] }}",
+            "isDefault": "{{ item.split(':')[1] }}",
+            "rn": "dom-{{ item.split(':')[0] }}",
+            "status": "created,modified"
+          }
+        }
+      }
+  loop: "{{ fabric_combined.policies.global.dns_profiles.domains }}"
+...

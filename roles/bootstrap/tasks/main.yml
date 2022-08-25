@@ -1,0 +1,12 @@
+---
+- ansible.builtin.include_tasks: combine_data.yml
+- ansible.builtin.include_tasks: fabric_date_and_time.yml
+- ansible.builtin.include_tasks: fabric_dns_profiles.yml
+- ansible.builtin.include_tasks: system_fabric_wide.yml
+- ansible.builtin.include_tasks: system_port_tracking.yml
+- ansible.builtin.include_tasks: system_date_time.yml
+- ansible.builtin.include_tasks: system_coop_group.yml
+- ansible.builtin.include_tasks: system_endpoint_controls.yml
+- ansible.builtin.include_tasks: fabric_snmp.yml
+- ansible.builtin.include_tasks: fabric_l3_interface.yml
+...

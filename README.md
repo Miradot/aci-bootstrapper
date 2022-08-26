@@ -21,6 +21,24 @@ ansible-galaxy collection install -r requirements.yml
 
 4) Run the playbook `ansible-playbook main.yml -i hosts.ini`
 
+```yaml
+# Content of main.yml, this is how the playbook running the bootstrap should look like.
+---
+- name: Bootstrap ACI
+  gather_facts: no
+  hosts: aci
+  connection: local
+  vars_files:
+    - ./vars_files/main.yml
+
+  tasks:
+    - ansible.builtin.include_role:
+        name: bootstrap
+...
+```
+
+![Ansible Output](./ansible_output.png)
+
 ## Getting help
 
 If you have questions, concerns, bug reports, etc., please create an issue against this repository.

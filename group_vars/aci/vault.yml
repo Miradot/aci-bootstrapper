@@ -1,5 +1,7 @@
 # Recommended to encrypt this file
 ---
-user: <add aci username here>
-pass: <add aci password here>
+#user: <add aci username here>
+#pass: <add aci password here>
+user: admin
+pass: miradot1
 ...

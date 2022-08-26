@@ -39,7 +39,7 @@ ansible-galaxy collection install -r requirements.yml
 ...
 ```
 
-## Example of Ansible Output
+### Example of Ansible Output
 ![Ansible Output](./ansible_output.png)
 
 ## Getting help

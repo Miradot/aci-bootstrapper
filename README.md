@@ -21,6 +21,8 @@ ansible-galaxy collection install -r requirements.yml
 
 4) Run the playbook `ansible-playbook main.yml -i hosts.ini`
 
+### Example of main.yml to run the boostrap role
+
 ```yaml
 # Content of main.yml, this is how the playbook running the bootstrap should look like.
 ---
@@ -37,6 +39,7 @@ ansible-galaxy collection install -r requirements.yml
 ...
 ```
 
+## Example of Ansible Output
 ![Ansible Output](./ansible_output.png)
 
 ## Getting help

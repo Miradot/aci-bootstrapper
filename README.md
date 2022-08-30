@@ -35,9 +35,8 @@ ansible-galaxy collection install -r requirements.yml
   vars_files:
     - ./vars_files/main.yml
 
-  tasks:
-    - ansible.builtin.include_role:
-        name: bootstrap
+  roles:
+    - bootstrap
 ...
 ```
 
@@ -50,7 +49,7 @@ If you have questions, concerns, bug reports, etc., please create an issue again
 
 ## Getting involved
 
-This project is supposed to help enginners bootstrap their ACI with all the bells and wistles that is needed. If you have any suggestions on what else to include, feel free to reach ut by creating an issue.
+This project is supposed to help enginners bootstrap their ACI with all the bells and wistles that is needed. If you have any suggestions on what else to include or having issues, feel free to reach out by creating an issue.
 
 ## Licensing info
 

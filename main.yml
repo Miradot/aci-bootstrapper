@@ -5,8 +5,7 @@
   connection: local
   vars_files:
     - ./vars_files/main.yml
-
-  tasks:
-    - ansible.builtin.include_role:
-        name: bootstrap
+  
+  roles:
+    - bootstrap
 ...
